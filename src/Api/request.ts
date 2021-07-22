@@ -5,7 +5,7 @@ import axios from 'axios'
 export const resort = {
   getAll: (): Promise<IResort[]> => axios.get(`http://localhost:3000/api/skiresort/`).then(res => res.data),
 
-  getOne: (id: string): Promise<IResort> =>
+  getOne: (id: number): Promise<IResort> =>
     axios.get(`http://localhost:3000/api/skiresort/${id}`).then(res => res.data),
 
   post: ({ resortData }: { resortData: IResort }): Promise<IResort> =>
@@ -14,6 +14,6 @@ export const resort = {
   put: ({ id, resortData }: { id: number; resortData: IResort }): Promise<IResort> =>
     axios.put<IResort>(`http://localhost:3000/api/skiresort/${id}`, resortData).then(res => res.data),
 
-  delete: (id: string): Promise<null> =>
+  delete: (id: number): Promise<IResort> =>
     axios.delete(`http://localhost:3000/api/skiresort/${id}`).then(res => res.data),
 }

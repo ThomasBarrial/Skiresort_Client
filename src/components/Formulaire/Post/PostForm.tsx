@@ -1,19 +1,56 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { resort } from '../../../Api/request'
 import TextAreaInput from './inputs/TextAreaInput'
 import TextInput from './inputs/TextInput'
 
-function PostForm() {
-  const { register, watch, handleSubmit } = useForm()
+function PostForm({ resortId }: { resortId?: number }) {
+  const { register, handleSubmit, setValue } = useForm()
+  console.log(resortId)
 
-  const { mutate } = useMutation(resort.post)
+  const { data } = useQuery<IResort>(['resort', resortId], () => resort.getOne(resortId as number), {
+    enabled: Boolean(resortId),
+    onSuccess: data => {
+      setValue('name', data.name)
+      setValue('Description', data.Description)
+      setValue('siteWeb', data.siteWeb)
+      setValue('condition', data.condition)
+      setValue('images', data.images)
+      setValue('massifID', data.massifID)
+      setValue('scopeID', data.scopeID)
+      setValue('typeID', data.typeID)
+      setValue('Altitude', data.Altitude)
+    },
+  })
+
+  const { mutate: postResort } = useMutation(resort.post)
+
+  const { mutate: updateResort } = useMutation(resort.put, {
+    onSuccess: data => {
+      setValue('name', data.name)
+      setValue('Description', data.Description)
+      setValue('siteWeb', data.siteWeb)
+      setValue('condition', data.condition)
+      setValue('images', data.images)
+      setValue('massifID', data.massifID)
+      setValue('scopeID', data.scopeID)
+      setValue('typeID', data.typeID)
+      setValue('Altitude', data.Altitude)
+    },
+  })
+
+  const onSubmit = (resortData: IResort) => {
+    if (!resortId) return postResort({ resortData })
+    updateResort({ id: resortId, resortData })
+  }
 
   return (
     <div className="py-5 px-7">
-      <h1 className="text-darkBlue font-Open font-bold text-3xl">Create a new resort</h1>
-      <form action="" onSubmit={handleSubmit((resortData: IResort) => mutate({ resortData }))}>
+      <h1 className="text-darkBlue font-Open font-bold text-3xl">
+        {resortId ? `Update ${data?.name}` : 'Create a new resort'}
+      </h1>
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
         <TextInput label={'Resort Name'} name={'name'} register={register} />
         <TextAreaInput label={'Resort Description'} name={'Description'} register={register} />
         <TextInput label={'Url SiteWeb'} name={'siteWeb'} register={register} />
@@ -36,7 +73,7 @@ function PostForm() {
             className="focus:outline-none h-10 text-white mt-1 bg-darkBlue bg-opacity-50 dark:bg-input shadow-buttonShadow  rounded-md py-1 px-2"
           >
             <option value={1}>Big</option>
-            <option value={2}>Small</option>
+            <option value={3}>Small</option>
           </select>
         </label>
         <label className="flex text-darkBlue font-Open text-xl flex-col mt-5 font-bold">
@@ -52,7 +89,10 @@ function PostForm() {
         </label>
         <TextInput label={'Altitude'} name={'Altitude'} register={register} />
 
-        <button className="" type="submit">
+        <button
+          className="bg-darkBlue w-6/12 mt-5 focus:outline-none shadow-buttonShadow text-white font-bold rounded-md h-8 py-1 px-6 mr-10"
+          type="submit"
+        >
           ok
         </button>
       </form>

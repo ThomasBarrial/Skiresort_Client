@@ -6,10 +6,10 @@ import Header from './Header'
 import BG3 from '../Assets/OneResort.png'
 
 function OneResort() {
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams<{ id: any }>()
   console.log(id)
 
-  const { data } = useQuery<IResort>('resort', () => resort.getOne(id))
+  const { data } = useQuery<IResort>('resort', () => resort.getOne(id as number))
 
   return (
     <div
