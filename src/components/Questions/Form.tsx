@@ -11,7 +11,7 @@ interface IForm {
   setDataResort: Dispatch<SetStateAction<IResort[]>>
 }
 
-function Form({ question, setQuestion, data, setDataResort }: IForm) {
+function Form({ question, setQuestion, data, setDataResort }: IForm): JSX.Element {
   const [reponse1, setReponse1] = useState<string>('')
   const [reponse2, setReponse2] = useState<string>('')
   const [reponse3, setReponse3] = useState<string>('')
@@ -56,7 +56,7 @@ function Form({ question, setQuestion, data, setDataResort }: IForm) {
       <div>
         {question === 1 && <Ques1 setQuestion={setQuestion} setResponse1={setReponse1} />}
         {question === 2 && <Ques2 setQuestion={setQuestion} setReponse2={setReponse2} />}
-        {question === 3 && <Ques3 setQuestion={setQuestion} setReponse3={setReponse3} setIsForm={setIsForm} />}
+        {question === 3 && <Ques3 setReponse3={setReponse3} setIsForm={setIsForm} />}
       </div>
       {isFrom && (
         <div>

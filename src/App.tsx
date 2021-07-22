@@ -5,6 +5,7 @@ import Questions from './components/Questions/Questions'
 import Home from './pages/Home'
 import queryClient from './Api/query-clients'
 import OneResort from './components/OneResort'
+import Settings from './components/Settings'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/questionnary" component={Questions} />
           <Route exact path="/resort/:id" component={OneResort} />
+          <Route exact path="/settings" component={Settings} />
         </Switch>
       </QueryClientProvider>
     </BrowserRouter>

@@ -9,7 +9,9 @@ function Header() {
           <li className="mr-6">Home</li>
         </Link>
         <li className="mr-6">Search</li>
-        <li>Settings</li>
+        <Link to="/settings">
+          <li>Settings</li>
+        </Link>
       </nav>
     </div>
   )

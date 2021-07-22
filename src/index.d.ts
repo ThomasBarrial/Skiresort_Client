@@ -8,5 +8,5 @@ interface IResort {
   massifID: number
   scopeID: number
   typeID: number
-  AltitudeID: number
+  Altitude: string
 }

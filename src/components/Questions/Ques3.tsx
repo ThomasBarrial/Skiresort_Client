@@ -1,12 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface IQuestion {
-  setQuestion: Dispatch<SetStateAction<number>>
   setReponse3: Dispatch<SetStateAction<string>>
   setIsForm: Dispatch<SetStateAction<boolean>>
 }
 
-function Ques3({ setQuestion, setReponse3, setIsForm }: IQuestion) {
+function Ques3({ setReponse3, setIsForm }: IQuestion) {
   const handleClick1 = () => {
     setIsForm(true)
     setReponse3('Family')
