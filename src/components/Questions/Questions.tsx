@@ -10,6 +10,7 @@ import Form from './Form'
 import { useState } from 'react'
 import SearchBar from '../SearchBar'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 function Questions(): JSX.Element {
   const [dataResort, setDataResort] = useState<IResort[]>([])
@@ -35,7 +36,9 @@ function Questions(): JSX.Element {
     >
       <div className="flex w-full">
         <div className="w-8/12 px-10 py-7 flex flex-col items-start">
-          <h1 className="font-bold text-darkBlue text-3xl font-Anton">FRENCH SKI RESORT</h1>
+          <Link to="/">
+            <h1 className="font-bold text-darkBlue text-3xl font-Anton">FRENCH SKI RESORT</h1>
+          </Link>
           <h1 className="text-3xl mt-12 text-darkBlue">
             Answer this few question to find your perfect french ski resort{' '}
           </h1>

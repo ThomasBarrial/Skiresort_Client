@@ -33,6 +33,7 @@ function Settings(): JSX.Element {
       </div>
       <div className="w-6/12 px-10 h-screen overflow-y-auto">
         <Header />
+
         <div className="pb-20">
           {data?.map((resort, Id) => {
             return <UniqueResort oneResort={resort} key={Id} setResortId={setResortId} />
