@@ -14,7 +14,7 @@ function TextAreaInput({ label, register, name }: IProps): JSX.Element {
         {label}
         <textarea
           {...register(name)}
-          className="focus:outline-none h-40 text-white mt-1 bg-darkBlue bg-opacity-50 dark:bg-input shadow-buttonShadow  rounded-md py-1 px-2"
+          className="focus:outline-none h-32 text-white mt-1 bg-darkBlue bg-opacity-50 dark:bg-input shadow-buttonShadow  rounded-md py-1 px-2"
         />
       </label>
     </div>

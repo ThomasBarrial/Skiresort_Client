@@ -1,13 +1,18 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
+import { useHistory } from 'react-router-dom'
 import { resort } from '../../../Api/request'
+import useModal from '../../../hook/useModal'
+import Modal from '../../Questions/Modal'
 import TextAreaInput from './inputs/TextAreaInput'
 import TextInput from './inputs/TextInput'
 
 function PostForm({ resortId }: { resortId?: number }) {
   const { register, handleSubmit, setValue } = useForm()
   console.log(resortId)
+  const { isModal, setIsModal, message, setMessage } = useModal()
+  const history = useHistory()
 
   const { data } = useQuery<IResort>(['resort', resortId], () => resort.getOne(resortId as number), {
     enabled: Boolean(resortId),
@@ -24,10 +29,17 @@ function PostForm({ resortId }: { resortId?: number }) {
     },
   })
 
-  const { mutate: postResort } = useMutation(resort.post)
+  const { mutate: postResort, error: postError } = useMutation(resort.post, {
+    onSuccess: () => {
+      setIsModal(true)
+      setMessage('the resort was succesfully upload')
+    },
+  })
 
-  const { mutate: updateResort } = useMutation(resort.put, {
+  const { mutate: updateResort, error: putError } = useMutation(resort.put, {
     onSuccess: data => {
+      setIsModal(true)
+      setMessage('the resort was succesfully update')
       setValue('name', data.name)
       setValue('Description', data.Description)
       setValue('siteWeb', data.siteWeb)
@@ -45,8 +57,22 @@ function PostForm({ resortId }: { resortId?: number }) {
     updateResort({ id: resortId, resortData })
   }
 
+  const error = postError || putError
+
   return (
     <div className="py-5 px-7">
+      {isModal && (
+        <Modal
+          title="Every things geos well"
+          buttons={
+            !error
+              ? [{ text: 'ok', handleClick: () => window.location.reload() }]
+              : [{ text: 'New try', handleClick: () => setIsModal(false) }]
+          }
+        >
+          {message}
+        </Modal>
+      )}
       <h1 className="text-darkBlue font-Open font-bold text-3xl">
         {resortId ? `Update ${data?.name}` : 'Create a new resort'}
       </h1>
@@ -57,7 +83,7 @@ function PostForm({ resortId }: { resortId?: number }) {
         <TextInput label={'Url SnowForecast'} name={'condition'} register={register} />
         <TextInput label={'Url Image'} name={'images'} register={register} />
         <label className="flex text-darkBlue font-Open text-xl flex-col mt-5 font-bold">
-          Selelect a massif
+          Select a massif
           <select
             {...register('massifID')}
             className="focus:outline-none h-10 text-white mt-1 bg-darkBlue bg-opacity-50 dark:bg-input shadow-buttonShadow  rounded-md py-1 px-2"
@@ -67,7 +93,7 @@ function PostForm({ resortId }: { resortId?: number }) {
           </select>
         </label>
         <label className="flex text-darkBlue font-Open text-xl flex-col mt-5 font-bold">
-          Selelect the resort's size
+          Select the resort's size
           <select
             {...register('scopeID')}
             className="focus:outline-none h-10 text-white mt-1 bg-darkBlue bg-opacity-50 dark:bg-input shadow-buttonShadow  rounded-md py-1 px-2"

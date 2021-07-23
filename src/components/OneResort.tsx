@@ -22,7 +22,9 @@ function OneResort() {
       }}
     >
       <div className="flex items-center px-5">
-        <h1 className="font-bold text-darkBlue w-6/12 text-3xl font-Anton">FRENCH SKI RESORT</h1>
+        <Link className="w-full" to="/">
+          <h1 className="font-bold text-darkBlue w-6/12 text-3xl font-Anton">FRENCH SKI RESORT</h1>
+        </Link>
         <Header />
       </div>
       <div className="flex p-20 justify-center w-full">
@@ -42,18 +44,19 @@ function OneResort() {
             <p className="mt-5 font-bold">
               Station: {data?.typeID === 1 && 'Familiale'}
               {data?.typeID === 2 && 'Athletic'}
-              {data?.typeID === 2 && 'Festive'}
+              {data?.typeID === 3 && 'Festive'}
             </p>
+            <p className="mt-5 font-bold">Altitude: {data?.Altitude}</p>
           </div>
           <div className="flex my-10">
             <a
-              className="text-center rounded-md bg-darkBlue p-2 w-5/12 text-white font-bold shadow-buttonShadow"
+              className=" transform motion-safe:hover:scale-105 text-center rounded-md bg-darkBlue p-2 w-5/12 text-white font-bold shadow-buttonShadow"
               href={data?.siteWeb}
             >
               Site Web
             </a>
             <a
-              className="text-center ml-8 rounded-md bg-darkBlue p-2 w-5/12 text-white font-bold shadow-buttonShadow"
+              className="transform motion-safe:hover:scale-105 text-center ml-8 rounded-md bg-darkBlue p-2 w-5/12 text-white font-bold shadow-buttonShadow"
               href={data?.condition}
             >
               Condition d'enneigement
